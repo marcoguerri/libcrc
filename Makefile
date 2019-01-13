@@ -31,6 +31,7 @@ run_tests: tests
 clean:
 	rm -f $(OBJECTS)
 	rm -f bin/*
+	rm -f libcrc.a
 	make -C src/tests clean
 
 .PHONY: clean
