@@ -19,7 +19,7 @@ libcrc.so: $(OBJECTS)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 libcrc.a: $(OBJECTS)
-       ar rcs $@ $^
+	ar rcs $@ $^
 
 tests: libcrc.so
 	make -C src/tests
