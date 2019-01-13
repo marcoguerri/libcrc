@@ -107,7 +107,13 @@ crc_fast(crc_params_t *crc_params, uint8_t *message, uint32_t msg_len)
     
     if(crc_params->type == CRC32)
         t = ((uint32_t*)get_crc_table(crc_params));
-   
+    else { 
+        /* Fast CRC supported only for CRC32 */
+        crc_tmp.crc8 = 0;
+        crc_tmp.crc16 = 0;
+        crc_tmp.crc32 = 0;
+        return crc_tmp;
+    }
     switch(crc_params->type)
     {
         case CRC32:
@@ -128,7 +134,8 @@ crc_fast(crc_params_t *crc_params, uint8_t *message, uint32_t msg_len)
                      * If the hardware struggles with the branch prediction that
                      * the if requires, this can actually improve performance. In
                      * this case as a matter of fact the jumpless code is slower
-                     * (the condition resolves always to the same
+                     * (the condition resolves always to the same value and 
+                     * can be easily guessed)
                      */
                     crc_tmp.crc32 = 
                         (((uint32_t*)t)[message[j] ^ shift_right] ^ shift_left) ^
